@@ -23,6 +23,11 @@ struct Worker: GameObject {
 
     void GatherVespene(const sc2::Unit& target_);
 
+    uint32_t CheckMineralsMined();
+
+    uint32_t CheckVespeneMined();
+
  private:
     Job m_job;
+    sc2::BuffID m_resource_carried_last;
 };

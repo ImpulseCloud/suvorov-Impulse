@@ -41,6 +41,12 @@ struct Builder {
     uint32_t m_minerals;
     uint32_t m_vespene;
 
+    uint32_t m_mineral_income; //
+    uint32_t m_vespene_income;
+
+    std::vector<uint32_t> m_minerals_mined;
+    std::vector<uint32_t> m_vespene_mined;
+
     float m_available_food;
 
     std::list<Order> m_must_do;

@@ -15,6 +15,8 @@
 
 template <typename T>
 struct Cache {
+    std::list<T>& operator()();
+
     bool Empty() const;
 
     uint64_t Count() const;
@@ -36,6 +38,11 @@ struct Cache {
  private:
     std::list<T> m_objects;
 };
+
+template <typename T>
+std::list<T>& Cache<T>::operator()() {
+    return m_objects;
+}
 
 template <typename T>
 bool Cache<T>::Empty() const {
@@ -155,6 +162,10 @@ struct Hub {
 
     const Expansion* GetBestMiningExpansionNear(const sc2::Unit* unit_) const;
 
+    uint32_t CheckMineralsMined();
+
+    uint32_t CheckVespeneMined();
+
  private:
     Expansion* GetExpansionOfTownhall(const sc2::Unit& unit_);
 
@@ -173,6 +184,7 @@ struct Hub {
 
     Cache<Worker> m_busy_workers;
     Cache<Worker> m_free_workers;
+    Cache<Worker> m_mules;
     Cache<GameObject> m_larva;
 };
 

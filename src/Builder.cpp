@@ -13,12 +13,23 @@
 #include <algorithm>
 #include <memory>
 
-Builder::Builder(): m_minerals(0), m_vespene(0), m_available_food(0.0f) {
+Builder::Builder(): m_minerals(0), m_vespene(0), m_mineral_income(0),
+    m_vespene_income(0), m_available_food(0.0f) {
 }
 
 void Builder::OnStep() {
     m_minerals = gAPI->observer().GetMinerals();
     m_vespene = gAPI->observer().GetVespene();
+
+    m_mineral_income += gHub->CheckMineralsMined();
+    m_vespene_income += gHub->CheckVespeneMined();
+
+    if (gAPI->observer().GetGameLoop() % 120 == 0) {
+        m_minerals_mined.push_back(m_mineral_income);
+        m_mineral_income = 0;
+        m_vespene_mined.push_back(m_vespene_income);
+        m_vespene_income = 0;
+    }
 
     m_available_food = gAPI->observer().GetAvailableFood();
 

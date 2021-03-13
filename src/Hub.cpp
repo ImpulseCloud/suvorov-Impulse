@@ -348,4 +348,24 @@ void Hub::RemoveExpansionOwner(const sc2::Unit& unit_) {
     expansion->RemoveOwner();
 }
 
+uint32_t Hub::CheckMineralsMined() {
+    uint32_t minerals_mined = 0;
+    for (auto& worker : m_free_workers()) {  // only free workers on minerals
+        minerals_mined += worker.CheckMineralsMined();
+    }
+
+    // check MULEs
+
+    return minerals_mined;
+}
+
+uint32_t Hub::CheckVespeneMined() {
+    uint32_t vespene_mined = 0;
+    for (auto& worker : m_busy_workers()) {  // only busy workers on gas
+        vespene_mined += worker.CheckVespeneMined();
+    }
+
+    return vespene_mined;
+}
+
 std::unique_ptr<Hub> gHub;
